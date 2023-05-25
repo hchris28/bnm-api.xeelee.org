@@ -2,8 +2,8 @@
 
 include_once '../db_config.php';
 
-function request_exec($action, $action_args, $input) {
-
+function request_exec($action, $action_args, $input)
+{
     switch ($action) {
         case 'list':
             return exec_list();
@@ -14,11 +14,12 @@ function request_exec($action, $action_args, $input) {
                 'message' => "Invalid action requested [{$action}].",
                 'query_result' => [],
                 'input' => $input
-        ];
+            ];
     }
 }
 
-function exec_list() {
+function exec_list()
+{
     $conn = get_db_connection();
 
     $stmt = $conn->query('select * from `field_scan_type`');

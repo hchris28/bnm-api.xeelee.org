@@ -46,7 +46,6 @@ function authorize($input)
 
 function parseRequest($request)
 {
-
     $endpoint = null;
     $action = "index";
     $action_args = [];
@@ -102,7 +101,7 @@ function get_request_function($endpoint)
 
 function exit_and_return_json($data)
 {
-    // TODO: double-check security impliations for these header values
+    // TODO: double-check security implications for these header values
 
     header("Content-Type: application/json");
     header("Access-Control-Allow-Origin: *");

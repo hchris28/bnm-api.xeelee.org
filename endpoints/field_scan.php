@@ -7,7 +7,6 @@ include_once '../utility/guid_generator.php';
 
 function request_exec($action, $action_args, $input)
 {
-
     switch ($action) {
         case 'index':
             return exec_index($input);
@@ -47,7 +46,7 @@ function exec_index($input)
     $stmt = $conn->prepare(SQL_FIELD_SCAN . " where `field_scan`.`id` = :id");
     $stmt->execute($id_param);
     $query_result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     $field_notes = $query_result['notes'];
     unset($query_result['notes']);
     $query_result += ['field_notes' => $field_notes];
@@ -182,7 +181,7 @@ function get_sql_params($input)
         if (array_key_exists($param_name, $input) && is_array($input[$param_name]) && count($input[$param_name]) > 0) {
 
             $param_values = $input[$param_name];
-            
+
             $param_names = [];
             for ($i = 0; $i < count($param_values); $i++) {
                 array_push($param_names, ":{$param_name}_{$i}");
@@ -202,7 +201,7 @@ function get_sql_params($input)
 
             if (count($param_values) != 2 || ($param_values[0] == '' && $param_values[1] == ''))
                 return;
-    
+
             if ($param_values[0] == '') {
                 $sql_where[] = "{$param_name} <= :{$param_name}";
                 $sql_params[$param_name] = $param_values[1];

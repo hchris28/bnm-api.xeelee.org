@@ -2,8 +2,8 @@
 
 include_once '../db_config.php';
 
-function request_exec($action, $action_args, $input) {
-
+function request_exec($action, $action_args, $input)
+{
     switch ($action) {
         case 'index':
             return exec_index($input);
@@ -24,7 +24,8 @@ function request_exec($action, $action_args, $input) {
     }
 }
 
-function exec_index($input) {
+function exec_index($input)
+{
     if (!array_key_exists('pallet_id', $input)) {
         return [
             'status' => 'error',
@@ -64,7 +65,8 @@ function exec_index($input) {
     ];
 }
 
-function exec_set_status($input) {
+function exec_set_status($input)
+{
     if (!array_key_exists('pallet_id', $input) || !array_key_exists('status', $input)) {
         return [
             'status' => 'error',
@@ -122,8 +124,10 @@ function exec_set_status($input) {
     }
 }
 
-function exec_add_note($input) {
-    if (!array_key_exists('pallet_id', $input) 
+function exec_add_note($input)
+{
+    if (
+        !array_key_exists('pallet_id', $input)
         || !array_key_exists('note', $input)
         || !array_key_exists('author', $input)
     ) {

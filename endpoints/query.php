@@ -3,8 +3,8 @@
 include_once '../db_config.php';
 include_once '../config.php';
 
-function request_exec($action, $action_args, $input) {
-    
+function request_exec($action, $action_args, $input)
+{
     switch ($action) {
         case 'index':
             return exec_index($input);
@@ -18,11 +18,12 @@ function request_exec($action, $action_args, $input) {
                 'message' => "Invalid action requested [{$action}].",
                 'query_result' => [],
                 'input' => $input
-        ];
+            ];
     }
 }
 
-function exec_index($input) {
+function exec_index($input)
+{
     [$sql_where, $sql_params] = get_sql_params($input);
 
     if (count($sql_where) == 0) {
@@ -36,7 +37,7 @@ function exec_index($input) {
 
     // get total count
     $stmtTotalCount = $conn->prepare("select count(*) from vw_pallet_detail where " . implode(' and ', $sql_where));
-    $stmtTotalCount ->execute($sql_params);
+    $stmtTotalCount->execute($sql_params);
     $total_records = $stmtTotalCount->fetchColumn();
 
     if ($total_records > MAX_QUERY_RESULTS) {
@@ -58,8 +59,8 @@ function exec_index($input) {
     ]);
 }
 
-function exec_page($input) {
-    
+function exec_page($input)
+{
     [$sql_where, $sql_params] = get_sql_params($input);
 
     if (count($sql_where) == 0) {
@@ -73,7 +74,7 @@ function exec_page($input) {
 
     // get total count
     $stmtTotalCount = $conn->prepare("select count(*) from vw_pallet_detail where " . implode(' and ', $sql_where));
-    $stmtTotalCount ->execute($sql_params);
+    $stmtTotalCount->execute($sql_params);
     $total_records = $stmtTotalCount->fetchColumn();
 
     // get data for requested page
@@ -103,7 +104,8 @@ function exec_page($input) {
     ]);
 }
 
-function get_sql_params($input) {
+function get_sql_params($input)
+{
     $sql_where = [];
     $sql_params = [];
     $add_like_param = function ($param_name) use ($input, &$sql_where, &$sql_params, &$debug) {
@@ -112,7 +114,7 @@ function get_sql_params($input) {
             $sql_params[$param_name] = "%{$input[$param_name]}%";
         }
     };
-    
+
     $add_like_param('pallet_id');
     $add_like_param('module_type');
     $add_like_param('area');
@@ -130,7 +132,8 @@ function get_sql_params($input) {
     return [$sql_where, $sql_params];
 }
 
-function get_return_value($params) {
+function get_return_value($params)
+{
     $result_template = [
         'status' => 'ok',
         'message' => '',
@@ -148,5 +151,3 @@ function get_return_value($params) {
 
     return $result_template;
 }
-
-?>

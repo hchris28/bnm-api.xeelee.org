@@ -7,7 +7,6 @@ include_once '../utility/guid_generator.php';
 
 function request_exec($action, $action_args, $input)
 {
-
     switch ($action) {
         case 'index':
             return exec_index($input);
